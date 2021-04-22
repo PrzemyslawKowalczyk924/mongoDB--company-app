@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const ObjectId = require('mongodb').ObjectId;
-const db = require('./../db');
 
 router.get('/employees', (req, res) => {
   req.db.collection('employees').find().toArray((err, data) => {

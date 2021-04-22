@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoClient = require('mongodb').MongoClient;
+//const mongoose = require('mongoose');
 
 const employeesRoutes = require('./routes/employees.routes');
 const departmentsRoutes = require('./routes/departments.routes');
@@ -12,7 +13,7 @@ mongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUn
   }
   else {
     console.log('Successfully connected to the database');
-    
+
     const db = client.db('companyDB');
     const app = express();
 
