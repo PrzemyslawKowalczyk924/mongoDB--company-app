@@ -13,12 +13,16 @@ describe('Department', () => {
   
       const uri = await fakeDB.getUri();
   
-      mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      await mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   
     } catch(err) {
       console.log(err);
     }
   
+  });
+
+  after(() => {
+    mongoose.models = {};
   });
 
   describe('Reading data', () => {
@@ -112,10 +116,6 @@ describe('Department', () => {
       await testDepTwo.save();
     });
     
-    afterEach(async () => {
-      await Department.deleteMany();
-    });
-
     it('should properly remove one document with "deleteOne" method', async () => {
       await Department.deleteOne({ name: 'Department #1' });
       const removeDepartment = await Department.findOne({ name: 'Department #1' });
@@ -134,11 +134,11 @@ describe('Department', () => {
       const departments = await Department.find();
       expect(departments.length).to.be.equal(0);
     });
-  
-  });
 
-  after(() => {
-    mongoose.models = {};
+    afterEach(async () => {
+      await Department.deleteMany();
+    });
+  
   });
 
 });

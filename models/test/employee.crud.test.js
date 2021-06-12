@@ -15,12 +15,16 @@ describe('Employee', () => {
   
       const uri = await fakeDB.getUri();
   
-      mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      await mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   
     } catch(err) {
       console.log(err);
     }
-  
+
+  });
+
+  after(() => {
+    mongoose.models = {};
   });
 
   describe('Reading data', () => {
@@ -63,6 +67,7 @@ describe('Employee', () => {
   });
 
   describe('Reading data with "populate', () => {
+
     it('should return all the data with "find" method with "populate"', async () => {
       const testDepOne = new Department({ _id: ObjectId('111111111111aaaaaaaaaaaa'), name: 'DevOps' });
       await testDepOne.save();
@@ -180,10 +185,6 @@ describe('Employee', () => {
       await Employee.deleteMany();
     });
 
-  });
-
-  after(() => {
-    mongoose.models = {};
   });
 
 });
