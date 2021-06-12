@@ -26,4 +26,5 @@ describe('DELETE /api/departments', () => {
   after(async () => {
     await Department.deleteMany();
   });
+  
 });
